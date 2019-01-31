@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'urls/index'
-  get 'urls/create'
-  get 'urls/show'
-  get 'urls/destroy'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root to: 'urls#index'
+  
+  get '/:code', to: 'urls#show', as: 'get_url', constraints: { code: /[A-Z0-9]{4}/ }
+  resources :urls, except: [:index, :edit, :show]
 end
