@@ -1,2 +1,28 @@
-h1 Urls#index
-p Find me in app/views/urls/index.html.slim
+.row
+  .col-md-6.mx-auto
+    .card.card-warning
+      = render 'new_url'
+
+.row
+  .col-md-6.mx-auto
+    .card.card-primary
+      .card-heading
+        h3.card-title
+          | HISTORY & STATS
+      .card-body
+        table.table
+          thead
+            tr
+              th short url
+              th original url
+              th most recent visit 
+              th detail
+          tbody
+            - @urls.each do |url|
+              tr 
+                td = url.shortened_url
+                td = url.original_url
+                td = url.updated_at.strftime('%F %H')
+                td = link_to 'see stats', url_path(url.id), class: 'btn btn warning'
+
+

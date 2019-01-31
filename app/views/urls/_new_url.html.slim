@@ -1,0 +1,8 @@
+= form_with model: @url, url: urls_path do |f|
+  .form-group
+    .col-md-10
+      = f.label :original_url
+      = f.text_field :original_url, class: 'form-control form-inline'
+
+    .col-md-2
+      = f.submit 'lose weight!', class: 'btn btn-info'
