@@ -1,14 +1,16 @@
-.row
+.row.mb-3
   .col-md-6.mx-auto
-    .card.card-warning
-      = render 'new_url'
+    .card
+      .card-header.text-white.bg-warning
+        h5 CREATE NEW 
+      .card-body
+        = render 'new_url'
 
 .row
   .col-md-6.mx-auto
-    .card.card-primary
-      .card-heading
-        h3.card-title
-          | HISTORY & STATS
+    .card
+      .card-header.text-white.bg-info
+        h5 HISTORY & STATS
       .card-body
         table.table
           thead
@@ -21,8 +23,8 @@
             - @urls.each do |url|
               tr 
                 td = url.shortened_url
-                td = url.original_url
+                td = link_to url.original_url
                 td = url.updated_at.strftime('%F %H')
-                td = link_to 'see stats', url_path(url.id), class: 'btn btn warning'
+                td = link_to 'STATS', url_path(url.id), class: 'btn btn-info'
 
 

@@ -13,10 +13,25 @@ class UrlsController < ApplicationController
   end
 
   def get
-    
+    url = Url.find_by!(shortened_url: params[:code])
+    url.count += 1
+    url.save!
+    redirect_to url.original_url
+  rescue StandardError
+    flash[:error] = "Did you mistype the url?"
+    redirect_to root_path
   end
 
   def show
+    url = Url.find(params[:id].to_i)
+    byebug
+    @stats = {
+      shortened_url: request.base_url + '/' + url.shortened_url,
+      original_url: url.original_url,
+      usage_count: url.count,
+      created_at: url.created_at,
+      most_recent_use: url.updated_at
+    }
   end
 
   def destroy
@@ -32,7 +47,7 @@ class UrlsController < ApplicationController
       new_code = [*('A'..'Z'),*('0'..'9')].shuffle[0,4].join
 
       while existing_codes.include?(new_code)
-        new_code = [*('A'..'Z'),*('0'..'9')].shuffle[0,4].join
+        new_code = [*('A'..'Z'), *('0'..'9')].shuffle[0,4].join
       end
 
       new_code

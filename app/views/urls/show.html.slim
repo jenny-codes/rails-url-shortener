@@ -1,2 +1,14 @@
-h1 Urls#show
-p Find me in app/views/urls/show.html.slim
+.row
+  .col-md-6.mx-auto
+    .card
+      .card-header.text-white.bg-info
+        h5 DETAILS
+      .card-body
+        table.table
+          tbody
+            - @stats.each do |key, value|
+              tr 
+                td = key.to_s.humanize
+                td = value
+
+
