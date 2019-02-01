@@ -6,9 +6,9 @@ class UrlsController < ApplicationController
 
   def create
     @url = Url.new(url_params)
-    @url.shortened_url ||= random_code
+    @url.shortened_url = random_code if @url.shortened_url.blank?
     @url.save!
-    redirect_to root_path, notice: 'Short url successfully created!'
+    redirect_to root_path, notice: "Short url successfully created! Here: #{request.base_url}/#{@url.shortened_url}"
   rescue StandardError => e
     flash[:error] = "Oops! #{e}"
     redirect_to root_path
@@ -33,9 +33,6 @@ class UrlsController < ApplicationController
       created_at: url.created_at,
       most_recent_use: url.updated_at
     }
-  end
-
-  def destroy
   end
 
   private
