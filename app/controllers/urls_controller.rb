@@ -1,4 +1,6 @@
 class UrlsController < ApplicationController
+
+  # homepage
   def index
     @url = Url.new
     @urls = Url.all
@@ -14,6 +16,7 @@ class UrlsController < ApplicationController
     redirect_to root_path
   end
 
+  # Shortened url requests come here
   def get
     url = Url.find_by!(shortened_url: params[:code])
     url.count += 1
@@ -24,6 +27,7 @@ class UrlsController < ApplicationController
     redirect_to root_path
   end
 
+  # detailed page of the shortened url
   def show
     url = Url.find(params[:id].to_i)
     @stats = {
@@ -40,6 +44,7 @@ class UrlsController < ApplicationController
       params.require(:url).permit(:original_url, :shortened_url)
     end
 
+    # generate random 4-charcter-long string
     def random_code
       existing_codes = Url.select(:shortened_url).map(&:shortened_url)
       new_code = [*('A'..'Z'),*('0'..'9')].shuffle[0,4].join
