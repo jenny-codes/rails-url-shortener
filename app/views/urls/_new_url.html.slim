@@ -1,8 +1,10 @@
 = form_with model: @url, url: urls_path do |f|
   .form-group
     .col-md-10.mb-1
-      = f.label :original_url
+      = f.label :original_url, 'the url you want to shorten' 
       = f.text_field :original_url, class: 'form-control form-inline'
-
+    .col-md-10.mb-1
+      = f.label :shortened_url, '(optional) custom shortened url. Please provide a valid format' 
+      = f.text_field :shortened_url, class: 'form-control form-inline'
     .col-md-2
       = f.submit 'LOSE WEIGHT!', class: 'btn btn-warning text-white'

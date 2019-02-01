@@ -22,9 +22,9 @@
           tbody
             - @urls.each do |url|
               tr 
-                td = url.shortened_url
+                td #{request.base_url}/#{url.shortened_url}
                 td = link_to url.original_url
-                td = url.updated_at.strftime('%F %H')
+                td = url.updated_at.strftime('%F %H:%M')
                 td = link_to 'STATS', url_path(url.id), class: 'btn btn-info'
 
 

@@ -6,10 +6,12 @@ class UrlsController < ApplicationController
 
   def create
     @url = Url.new(url_params)
-    @url.shortened_url = random_code
+    @url.shortened_url ||= random_code
     @url.save!
-    # TODO: rescue
     redirect_to root_path, notice: 'Short url successfully created!'
+  rescue StandardError => e
+    flash[:error] = "Oops! #{e}"
+    redirect_to root_path
   end
 
   def get
@@ -18,15 +20,14 @@ class UrlsController < ApplicationController
     url.save!
     redirect_to url.original_url
   rescue StandardError
-    flash[:error] = "Did you mistype the url?"
+    flash[:error] = "That's not right. Did you mistype the url?"
     redirect_to root_path
   end
 
   def show
     url = Url.find(params[:id].to_i)
-    byebug
     @stats = {
-      shortened_url: request.base_url + '/' + url.shortened_url,
+      shortened_url: "#{request.base_url}/#{url.shortened_url}",
       original_url: url.original_url,
       usage_count: url.count,
       created_at: url.created_at,
@@ -39,7 +40,7 @@ class UrlsController < ApplicationController
 
   private
     def url_params
-      params.require(:url).permit(:original_url)
+      params.require(:url).permit(:original_url, :shortened_url)
     end
 
     def random_code

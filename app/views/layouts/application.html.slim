@@ -20,5 +20,6 @@ html
         .jumbotron.col-md-12
           h1.text-center URL SHORTENER
       .row
-        = flash[:notice] || flash[:error]
+        .col-md-12.text-center
+          = flash[:notice] || flash[:error]
       = yield
