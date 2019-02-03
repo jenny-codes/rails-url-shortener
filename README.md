@@ -8,6 +8,7 @@ Usage:
 
 Features:
 1. Allows custom shortened url names (with restrictions).
+2. The urls listed on homepage are ordered by the timestamp of most-recent use.
 2. Redirects back to homepage on receiving nonexistent/disallowed links.
 
 Future improvements:
